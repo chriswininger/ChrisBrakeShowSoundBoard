@@ -12,6 +12,12 @@
     margin-top: 0;
 }
 
+#iphoneKludge
+{
+    margin-top: 0;
+    padding-top: 0;
+}
+
 .soundboard-clip
 {
     margin-bottom: 1em;
