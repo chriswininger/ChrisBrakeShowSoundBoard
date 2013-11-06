@@ -4,10 +4,12 @@
     <title>The Chris Brake Show Sound Board Cliporater Madness!!!!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
+    <link href="assets/js/library/jquery-ui/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" media="screen">
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="assets/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
     <link href="assets/css/site.css" rel="stylesheet" media="screen">
     <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="assets/css/toastr.min.css" rel="stylesheet" media="screen">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -35,6 +37,12 @@
             </div>
         </div>
 
+        <div id="iphoneKludge" class="row" hidden>
+            <div class="col-lg-12 page-header">
+                <a id="init" ontouchstart="javascript:activateAudioForIOS();">Activate Audio</a>
+            </div>
+        </div>
+
         <div id="sound-board" class="row" data-bind="foreach: clips">
             <div class="col-xs-6 col-md-2">
                 <a href="#" class="thumbnail disabled soundboard-clip" data-bind="click: $root.playClip">
@@ -50,13 +58,13 @@
         </div>
     </div>
 
-
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="assets/js/library/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="assets/js/library/jquery-ui/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="assets/js/library/jquery.ui.touch-punch.min.js"></script>
     <script src="assets/js/library/bootstrap.min.js"></script>
     <script src="assets/js/library/knockout-2.3.0.js"></script>
+    <script src="assets/js/library/toastr.min.js"></script>
+
     <script src="assets/clips/clips.js"></script>
     <script src="assets/js/soundboard.js"></script>
 </body>
