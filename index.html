@@ -16,6 +16,8 @@
     <script src="assets/js/library/ html5shiv.js"></script>
     <script src="assets/js/library/respond.min.js"></script>
     <![endif]-->
+
+    <script src="assets/js/library/jPhong.js"></script>
 </head>
 <body>
     <div id="top-nav" class="navbar navbar-inverse">
@@ -38,7 +40,7 @@
         </div>
 
         <div id="iphoneKludge"  hidden>
-            <button id="init" class="btn-block" ontouchstart="javascript:activateAudioForIOS();">Activate Audio</button>
+            <button id="init" class="btn-block" ontouchstart="javascript:SoundBoard.activateAudioForIOS();">Activate Audio</button>
             <hr />
         </div>
 
@@ -48,9 +50,16 @@
                     <img data-toggle="tooltip" data-bind="attr:{src: defaultImage, alt: clipInfo, title: clipInfo }, playbackImage: isPlaying" class="img-responsive img-rounded disabled" />
                 </a>
 
-                <audio preload hidden class="soundboard-clip-audio" data-bind="foreach: clipSources, event: { ended: $root.clipEnded, loadstart: $root.loading, canplay: $root.canPlay }">
-                    <source data-bind="attr:{src: source, type: mediaType }">
-                </audio>
+                <script type="text/javascript">
+                    if (!jPhong.deviceInfo.supportsAudioContext()) {
+                        var fallBack = '<audio preload hidden class="soundboard-clip-audio" data-bind="foreach: clipSources, event: { ended: $root.clipEnded, loadstart: $root.loading, canplay: $root.canPlay }">' +
+                                '<source data-bind="attr:{src: source, type: mediaType }">' +
+                                '</audio>';
+
+                        document.write(fallBack);
+                    }
+                </script>
+
 
                 <span class="soundboard-clip-load" data-bind="loadingSpinner: isLoading"><i class="fa fa-spinner fa-spin"></i>Loading...</span>
             </div>
