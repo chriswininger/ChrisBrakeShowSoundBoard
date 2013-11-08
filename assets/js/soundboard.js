@@ -109,17 +109,23 @@
         this.isLoading = ko.observable(true);
 
         if (jPhong.deviceInfo.supportsAudioContext()){
-            var tryLoad = function() {
-
+            var i = 0,
+            tryLoad = function(url) {
+                // Start loading clip
+                loadFile(url, function(buffer){
+                    self.buffer = buffer;
+                    self.isLoading(false);
+                }, function(error){
+                    // there was an error decoding the audio, try an alternate audio source
+                    if (i < self.clipSources.length) {
+                        tryLoad(self.clipSources[i++].source);
+                    } else {
+                        toastr.error(error.message); // no suitable audio source could be decoded
+                    }
+                });
             };
-            // Start loading clip
-            loadFile(this.clipSources[0].source, function(buffer){
-                self.buffer = buffer;
-                self.isLoading(false);
-            }, function(error){
-                console.log('error');
-            });
 
+            tryLoad(this.clipSources[i++].source);
         }
     }
 
@@ -195,7 +201,7 @@
                 }, function(e){
                     if (typeof errorCallBack !== 'undefined'){
                         if (typeof e === 'undefined'){
-                          e = new {'message': 'Error decoding the data.'};
+                          e = {'message': 'Error decoding the data.'};
                         }
 
                         errorCallBack(e);
