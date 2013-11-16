@@ -1,0 +1,55 @@
+<div id="top-nav" class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="http://www.youtube.com/user/chrisbrakeshow?feature=watch">The Chris Brake Show</a>
+        </div>
+        <div class="collapse navbar-collapse">
+
+        </div>
+    </div>
+</div>
+
+<div id="main-content" class="container">
+    <div id="banner" class="row">
+        <div id="banner-row" class="col-lg-12 page-header">
+            <!-- <h3>Chris Brake Show Sound Board Cliporater Maddnes!!!</h3> -->
+            <img class="img-responsive" src="<?php echo $this->basePath('img/banner.png') ?>" >
+        </div>
+    </div>
+
+    <div id="iphoneKludge"  hidden>
+        <button id="init" class="btn-block" ontouchstart="javascript:SoundBoard.activateAudioForIOS();">Activate Audio</button>
+        <hr />
+    </div>
+
+    <div id="sound-board" class="row" data-bind="foreach: clips">
+        <div class="col-xs-6 col-md-2">
+            <a href="#" class="thumbnail disabled soundboard-clip" data-bind="click: $root.playClip">
+                <img data-toggle="tooltip" data-bind="attr:{src: defaultImage, alt: clipInfo, title: clipInfo }, playbackImage: isPlaying" class="img-responsive img-rounded disabled" />
+            </a>
+
+            <script type="text/javascript">
+                if (!jPhong.deviceInfo.supportsAudioContext()) {
+                    var fallBack = '<audio preload hidden class="soundboard-clip-audio" data-bind="foreach: clipSources, event: { ended: $root.clipEnded, loadstart: $root.loading, canplay: $root.canPlay }">' +
+                        '<source data-bind="attr:{src: source, type: mediaType }">' +
+                        '</audio>';
+
+                    document.write(fallBack);
+                }
+            </script>
+
+
+            <span class="soundboard-clip-load" data-bind="loadingSpinner: isLoading"><i class="fa fa-spinner fa-spin"></i>Loading...</span>
+        </div>
+    </div>
+</div>
+
+<script src="js/library/jquery.js"></script>
+<script src="js/library/jquery-ui/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="js/library/jquery.ui.touch-punch.min.js"></script>
+<script src="js/library/bootstrap.min.js"></script>
+<script src="js/library/knockout-2.3.0.js"></script>
+<script src="js/library/toastr.min.js"></script>
+
+<script src="clips/clips.js"></script>
+<script src="js/soundboard.js"></script>
