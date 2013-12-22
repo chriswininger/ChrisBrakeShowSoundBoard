@@ -1,0 +1,28 @@
+delimiter $$
+
+CREATE DATABASE `pepperpants` /*!40100 DEFAULT CHARACTER SET latin1 */$$
+
+delimiter $$
+
+CREATE TABLE `soundboard_clip` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  `defaultImage` varchar(500) NOT NULL,
+  `playingImage` varchar(500) NOT NULL,
+  `info` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1$$
+
+delimiter $$
+
+CREATE TABLE `soundboard_clipSource` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `clipID` int(11) NOT NULL,
+  `pathLocal` varchar(500) NOT NULL,
+  `url` varchar(500) NOT NULL,
+  `mediaType` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `clipID` (`clipID`),
+  CONSTRAINT `soundboard_clipSource_ibfk_1` FOREIGN KEY (`clipID`) REFERENCES `soundboard_clip` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1$$
+
