@@ -3,6 +3,8 @@ namespace ClipRest;
 
 use ClipRest\Model\Clip;
 use ClipRest\Model\ClipTable;
+use ClipRest\Model\ClipSource;
+use ClipRest\Model\ClipSourceTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -36,12 +38,28 @@ class Module
                         $table = new ClipTable($tableGateway);
                         return $table;
                     },
-            'ClipTableGateway' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new Clip());
-                    return new TableGateway('soundboard_clip', $dbAdapter, null, $resultSetPrototype);
-                },
+                'ClipTableGateway' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        $resultSetPrototype = new ResultSet();
+                        $resultSetPrototype->setArrayObjectPrototype(clone $sm->get('ClipRest\Model\Clip'));
+                        return new TableGateway('soundboard_clip', $dbAdapter, null, $resultSetPrototype);
+                    },
+                'ClipRest\Model\ClipSourceTable' =>  function($sm) {
+                        $tableGateway = $sm->get('ClipSourceTableGateway');
+                        $table = new ClipSourceTable($tableGateway);
+                        return $table;
+                    },
+                'ClipSourceTableGateway' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        $resultSetPrototype = new ResultSet();
+                        $resultSetPrototype->setArrayObjectPrototype(new ClipSource());
+                        return new TableGateway('soundboard_clipSource', $dbAdapter, null, $resultSetPrototype);
+                    },
+                'ClipRest\Model\Clip' => function($sm) {
+                    $model = new Clip();
+                    $model->setServiceLocator($sm);
+                    return $model;
+                 }
             ),
         );
     }

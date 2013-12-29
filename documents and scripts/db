@@ -1,28 +1,134 @@
-delimiter $$
+delimiter ;
 
-CREATE DATABASE `pepperpants` /*!40100 DEFAULT CHARACTER SET latin1 */$$
+CREATE TABLE soundboard_clip (
+  id int(11) NOT NULL auto_increment,
+  title varchar(100) NOT NULL,
+  defaultImage varchar(500) NOT NULL,
+  playingImage varchar(500) NOT NULL,
+  info varchar(1000),
+  PRIMARY KEY (id)
+);
 
-delimiter $$
+CREATE TABLE soundboard_clipSource  (
+	id int(11) NOT NULL auto_increment,
+	clipID int(11) NOT NULL,
+	pathLocal VARCHAR(500) NOT NULL,
+    url VARCHAR(500) NOT NULL,
+	mediaType VARCHAR(50) NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY(clipID) REFERENCES soundboard_clip(id)
+);
 
-CREATE TABLE `soundboard_clip` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) NOT NULL,
-  `defaultImage` varchar(500) NOT NULL,
-  `playingImage` varchar(500) NOT NULL,
-  `info` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1$$
+CREATE USER 'soundboard_app'@'localhost' IDENTIFIED BY 'S1zzl3H1zzl3';
 
-delimiter $$
+GRANT SELECT,INSERT,UPDATE,DELETE 
+ON pepperpants.soundboard_clip
+TO 'soundboard_app'@'localhost';
 
-CREATE TABLE `soundboard_clipSource` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `clipID` int(11) NOT NULL,
-  `pathLocal` varchar(500) NOT NULL,
-  `url` varchar(500) NOT NULL,
-  `mediaType` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `clipID` (`clipID`),
-  CONSTRAINT `soundboard_clipSource_ibfk_1` FOREIGN KEY (`clipID`) REFERENCES `soundboard_clip` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1$$
+GRANT SELECT,INSERT,UPDATE,DELETE 
+ON pepperpants.soundboard_clipSource
+TO 'soundboard_app'@'localhost';
 
+INSERT INTO soundboard_clip(title, defaultImage, playingImage, info)
+	VALUES('Laughs: Bring it back', 
+			'clips/images/pinkSquare_Small.png', 
+			'clips/images/blueSquare_small.png',
+			'Laughs: Bring it back');
+
+INSERT INTO soundboard_clip(title, defaultImage, playingImage, info)
+	VALUES('Brake: Does this really matter', 
+			'clips/images/pinkSquare_Small.png', 
+			'clips/images/blueSquare_small.png',
+			'Brake: Does this really matter');
+
+INSERT INTO soundboard_clip(title, defaultImage, playingImage, info)
+	VALUES('Sarah: Yeah, this is so awesome', 
+			'clips/images/pinkSquare_Small.png', 
+			'clips;/images/blueSquare_small.png',
+			'Sarah: Yeah, this is so awesome');
+
+INSERT INTO soundboard_clip(title, defaultImage, playingImage, info)
+	VALUES('John: I Really Vote for a Restart', 
+			'clips/images/pinkSquare_Small.png', 
+			'clips/images/blueSquare_small.png',
+			'John: I Really Vote for a Restart');
+
+INSERT INTO soundboard_clip(title, defaultImage, playingImage, info)
+	VALUES('Brake: Apologize to my Sizner', 
+			'clips/images/pinkSquare_Small.png', 
+			'clips/images/blueSquare_small.png',
+			'Brake: Apologize to my Sizner');
+
+INSERT INTO soundboard_clip(title, defaultImage, playingImage, info)
+	VALUES('Sarah: Whos NPR?', 
+			'clips/images/pinkSquare_Small.png', 
+			'clips/images/blueSquare_small.png',
+			'Sarah: Whos NPR?');
+
+
+INSERT INTO soundboard_clipSource (clipID, pathLocal, url, mediaType)
+	VALUES(1,
+			'/home/prawri/public_html/thechrisbrakeshow/public/clips/bring_it_back.mp3',
+			'clips/bring_it_back.mp3',
+			'audio/mpeg');
+INSERT INTO soundboard_clipSource (clipID, pathLocal, url, mediaType)
+	VALUES(1,
+			'/home/prawri/public_html/thechrisbrakeshow/public/clips/bring_it_back.ogg',
+			'clips/bring_it_back.ogg',
+			'audio/ogg');
+
+INSERT INTO soundboard_clipSource (clipID, pathLocal, url, mediaType)
+	VALUES(2,
+			'/home/prawri/public_html/thechrisbrakeshow/public/clips/does_this_matter.mp3',
+			'clips/does_this_matter.mp3',
+			'audio/mpeg');
+INSERT INTO soundboard_clipSource (clipID, pathLocal, url, mediaType)
+	VALUES(2,
+			'/home/prawri/public_html/thechrisbrakeshow/public/clips/does_this_matter.ogg',
+			'clips/does_this_matter.ogg',
+			'audio/ogg');
+
+INSERT INTO soundboard_clipSource (clipID, pathLocal, url, mediaType)
+	VALUES(3,
+			'/home/prawri/public_html/thechrisbrakeshow/public/clips/yeah_that_is_so_awesome.mp3',
+			'clips/yeah_that_is_so_awesome.mp3',
+			'audio/mpeg');
+INSERT INTO soundboard_clipSource (clipID, pathLocal, url, mediaType)
+	VALUES(3,
+			'/home/prawri/public_html/thechrisbrakeshow/public/clips/yeah_that_is_so_awesome.ogg',
+			'clips/yeah_that_is_so_awesome.ogg',
+			'audio/ogg');
+
+INSERT INTO soundboard_clipSource (clipID, pathLocal, url, mediaType)
+	VALUES(4,
+			'/home/prawri/public_html/thechrisbrakeshow/public/clips/I_Really_Vote_For_A_Restart.mp3',
+			'clips/I_Really_Vote_For_A_Restart.mp3',
+			'audio/mpeg');
+INSERT INTO soundboard_clipSource (clipID, pathLocal, url, mediaType)
+	VALUES(4,
+			'/home/prawri/public_html/thechrisbrakeshow/public/clips/I_Really_Vote_For_A_Restart.ogg',
+			'clips/I_Really_Vote_For_A_Restart.ogg',
+			'audio/ogg');
+
+
+INSERT INTO soundboard_clipSource (clipID, pathLocal, url, mediaType)
+	VALUES(5,
+			'/home/prawri/public_html/thechrisbrakeshow/public/clips/I_Would_Like_To_Appologize_To_My_Sizner.mp3',
+			'clips/I_Would_Like_To_Appologize_To_My_Sizner.mp3',
+			'audio/mpeg');
+INSERT INTO soundboard_clipSource (clipID, pathLocal, url, mediaType)
+	VALUES(5,
+			'/home/prawri/public_html/thechrisbrakeshow/public/clips/I_Would_Like_To_Appologize_To_My_Sizner.ogg',
+			'clips/I_Would_Like_To_Appologize_To_My_Sizner.ogg',
+			'audio/ogg');
+
+INSERT INTO soundboard_clipSource (clipID, pathLocal, url, mediaType)
+	VALUES(6,
+			'/home/prawri/public_html/thechrisbrakeshow/public/clips/whos_npr.mp3',
+			'clips/whos_npr.mp3',
+			'audio/mpeg');
+INSERT INTO soundboard_clipSource (clipID, pathLocal, url, mediaType)
+	VALUES(6,
+			'/home/prawri/public_html/thechrisbrakeshow/public/clips/whos_npr.ogg',
+			'clips/whos_npr.ogg',
+			'audio/ogg');

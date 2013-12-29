@@ -11,12 +11,12 @@ class ClipRestController extends AbstractRestfulController
 
     public function getList()
     {
-        return new JsonModel($this->getClipTable()->fetchAll()->toArray());
+        return new JsonModel($this->getClipTable()->fetchAllWithSources()->toArray());
     }
 
     public function get($id)
     {
-       return new JsonModel($this->getClipTable()->getClip($id)->toArray());
+       return new JsonModel($this->getClipTable()->getClipWithSources($id)->toArray());
     }
 
     public function create($data)

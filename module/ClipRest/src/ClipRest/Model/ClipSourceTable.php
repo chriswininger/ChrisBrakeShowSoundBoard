@@ -2,9 +2,8 @@
 namespace ClipRest\Model;
 use Zend\Db\TableGateway\TableGateway;
 
-class ClipTable {
+class ClipSourceTable {
     protected $tableGateway;
-
 
     public function __construct(TableGateway $tableGateway)
     {
@@ -17,19 +16,7 @@ class ClipTable {
         return $resultSet;
     }
 
-    public function fetchAllWithSources()
-    {
-        $resultSet = $this->tableGateway->select();
-        $resultSet->buffer();
-        foreach ($resultSet as $row) {
-            $row->clipSources = $row->getClipSources();
-        }
-        unset($row);
-
-        return $resultSet;
-    }
-
-    public function getClip($id)
+    public function getClipSource($id)
     {
         $id  = (int) $id;
         $rowset = $this->tableGateway->select(array('id' => $id));
@@ -40,20 +27,20 @@ class ClipTable {
         return $row;
     }
 
-    public function getClipWithSources($id)
+    public function getClipSourceByClip($clipID)
     {
-       $row = $this->getClip($id);
-       $row->clipSources = $row->getClipSources();
-       return $row;
+        $clipID = (int) $clipID;
+        $rowset = $this->tableGateway->select(array('clipID' => $clipID ));
+        return $rowset;
     }
 
-    public function saveClip(Clip $clip)
+    public function saveClipSource(Clip $clip)
     {
         $data = array(
-            'title' => $clip->title,
-            'defaultImage'  => $clip->defaultImage,
-            'playingImage' => $clip->playingImage,
-            'info'  => $clip->info,
+            'clipID' => $clip->clipID,
+            'pathLocal'  => $clip->pathLocal,
+            'url' => $clip->url,
+            'mediaType'  => $clip->mediaType,
         );
 
         $id = (int)$clip->id;
@@ -68,7 +55,7 @@ class ClipTable {
         }
     }
 
-    public function deleteClip($id)
+    public function deleteClipSource($id)
     {
         $this->tableGateway->delete(array('id' => $id));
     }
