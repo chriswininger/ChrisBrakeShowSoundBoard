@@ -4,6 +4,9 @@ return array(
     'modules' => array(
         'Application',
 	    'ClipRest',
+        'ScnSocialAuth',
+        'ZfcBase',
+        'ZfcUser'
     ),
 
     // These are various options for the listeners attached to the ModuleManager
