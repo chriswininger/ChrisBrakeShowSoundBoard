@@ -17,14 +17,28 @@ CREATE TABLE soundboard_clipSource  (
 	FOREIGN KEY(clipID) REFERENCES soundboard_clip(id)
 );
 
-CREATE USER 'soundboard_app'@'localhost' IDENTIFIED BY 'S1zzl3H1zzl3';
+CREATE TABLE `user`
+(
+    `user_id`       INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `username`      VARCHAR(255) DEFAULT NULL UNIQUE,
+    `email`         VARCHAR(255) DEFAULT NULL UNIQUE,
+    `display_name`  VARCHAR(50) DEFAULT NULL,
+    `password`      VARCHAR(128) NOT NULL,
+    `state`         SMALLINT UNSIGNED
+) ENGINE=InnoDB CHARSET="utf8";
+
+CREATE USER 'soundboard_app'@'localhost' IDENTIFIED BY 'Password';
 
 GRANT SELECT,INSERT,UPDATE,DELETE 
 ON pepperpants.soundboard_clip
-TO 'soundboard_app@localhost';
-GRANT SELECT,INSERT,UPDATE,DELETE 
+TO 'soundboard_app'@'localhost';
+
+GRANT SELECT,INSERT,UPDATE,DELETE
 ON pepperpants.soundboard_clipSource
-TO 'soundboard_app@localhost';
+TO 'soundboard_app'@'localhost';
+GRANT SELECT,INSERT,UPDATE,DELETE
+ON pepperpants.user
+TO 'soundboard_app'@'localhost';
 
 INSERT INTO soundboard_clip(title, defaultImage, playingImage, info)
 	VALUES('Laughs: Bring it back', 
