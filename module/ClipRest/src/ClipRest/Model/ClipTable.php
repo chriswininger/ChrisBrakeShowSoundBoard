@@ -21,12 +21,15 @@ class ClipTable {
     {
         $resultSet = $this->tableGateway->select();
         $resultSet->buffer();
+
+        $out = array();
         foreach ($resultSet as $row) {
             $row->clipSources = $row->getClipSources();
+            array_push($out, $row);
         }
         unset($row);
 
-        return $resultSet;
+        return $out;
     }
 
     public function getClip($id)

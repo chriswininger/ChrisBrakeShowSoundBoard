@@ -31,7 +31,7 @@
             <script type="text/javascript">
                 if (!jPhong.deviceInfo.supportsAudioContext()) {
                     var fallBack = '<audio preload hidden class="soundboard-clip-audio" data-bind="foreach: clipSources, event: { ended: $root.clipEnded, loadstart: $root.loading, canplay: $root.canPlay }">' +
-                        '<source data-bind="attr:{src: source, type: mediaType }">' +
+                        '<source data-bind="attr:{src: url, type: mediaType }">' +
                         '</audio>';
 
                     document.write(fallBack);

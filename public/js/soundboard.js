@@ -19,8 +19,11 @@
         }
     });
 
-    function getClips() {
-        return Phong.ClipBoard.clips;
+    function getClips(complete) {
+        // http://local.thechrisbrakeshow.pepperpants.com/clip-rest
+        $.getJSON("/clip-rest", function(data) {
+            complete(data);
+        });
     }
 
     function SoundBoardModel(dataFetcher) {
@@ -91,7 +94,10 @@
         };
 
         // Init Model
-        self.mapData(dataFetcher());
+        dataFetcher(function(data) {
+            self.mapData(data);
+        });
+
     }
 
     // Instantiate a new clip
@@ -118,14 +124,14 @@
                 }, function(error){
                     // there was an error decoding the audio, try an alternate audio source
                     if (i < self.clipSources.length) {
-                        tryLoad(self.clipSources[i++].source);
+                        tryLoad(self.clipSources[i++].url);
                     } else {
                         toastr.error(error.message); // no suitable audio source could be decoded
                     }
                 });
             };
 
-            tryLoad(this.clipSources[i++].source);
+            tryLoad(this.clipSources[i++].url);
         }
     }
 
