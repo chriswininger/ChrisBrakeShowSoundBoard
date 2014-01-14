@@ -16,6 +16,8 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+        $auth = $this->zfcUserAuthentication()->getAuthService();
+
         return new ViewModel();
     }
 }
